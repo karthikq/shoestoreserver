@@ -1,11 +1,12 @@
 # @format
 
-name :"shoestore"
+name : Shoe Store
+
 on:
   push:
-    branches:["master"]
+    branches: ["master"]
   pull_request:
-    branches:["master"]
+    branches: ["master"]
   
 jobs:
   build:
