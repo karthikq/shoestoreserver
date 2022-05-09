@@ -11,17 +11,17 @@ const app = require("../app");
 chai.use(chaihttp);
 
 describe("Test User login", () => {
-  before(function (done) {
-    mongoose
-      .connect("mongodb://localhost:27017/test")
-      .then(() => {
-        console.log("connected to database");
-        done();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  // before(function (done) {
+  //   mongoose
+  //     .connect("mongodb://localhost:27017/test")
+  //     .then(() => {
+  //       console.log("connected to database");
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // });
 
   it("User doesn't exist's", (done) => {
     chai
@@ -80,8 +80,7 @@ describe("Test User login", () => {
       });
   });
   after(function (done) {
-    User.deleteMany({})
-    .then(() => {
+    User.deleteMany({}).then(() => {
       done();
     });
   });
