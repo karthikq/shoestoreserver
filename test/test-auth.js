@@ -37,8 +37,8 @@ describe("Test user controller", () => {
 
   it("test user signup", (done) => {
     chai
-      .request("http://localhost:5000/v1")
-      .post("/auth/user/signup")
+      .request(app)
+      .post("/v1/auth/user/signup")
       .set("content-type", "application/json")
       .send({
         email: "test@test.com",
@@ -60,8 +60,8 @@ describe("Test user controller", () => {
   it("test user login", (done) => {
     // sinon.stub(bcrypt, "compare").resolves({ result: true });
     chai
-      .request("http://localhost:5000/v1")
-      .post("/auth/user/login")
+      .request(app)
+      .post("/v1/auth/user/login")
       .set("content-type", "application/json")
       .send({
         email: "test@test.com",
