@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: uses nodejs V16
+      - name: uses nodejs
       - uses: actions/setup-node@v3
       - with:
-          node-version: "16"
+          node-version: "14"
       - run: npm i
       - run: npm run build --if-present
       - run: npm test
