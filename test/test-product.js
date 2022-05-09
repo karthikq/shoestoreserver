@@ -85,9 +85,6 @@ describe("testing product's route", () => {
       });
   });
   after(function (done) {
-    User.deleteMany({}).then(() => {
-      done();
-    });
     Product.deleteMany({}).then(() => {});
   });
 });

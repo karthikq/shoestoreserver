@@ -79,4 +79,9 @@ describe("Test User login", () => {
         done();
       });
   });
+  after(function (done) {
+    User.deleteMany({}).then(() => {
+      done();
+    });
+  });
 });
