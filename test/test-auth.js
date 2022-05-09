@@ -12,10 +12,6 @@ const connection = require("../utils/database");
 chai.use(chaihttp);
 
 describe("Test user controller", () => {
-  before(function () {
-    connection();
-  });
-
   it("User doesn't exist's", (done) => {
     chai
       .request(app)
