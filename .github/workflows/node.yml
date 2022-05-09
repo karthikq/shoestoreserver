@@ -12,6 +12,7 @@ jobs:
   build:
     env:
       MONGO_URL: mongodb://localhost/test
+      JWT_SECRECT: shoesecret
     runs-on: ubuntu-latest
 
     strategy:
