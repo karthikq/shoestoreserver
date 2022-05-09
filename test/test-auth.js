@@ -18,8 +18,8 @@ describe("Test user controller", () => {
 
   it("User doesn't exist's", (done) => {
     chai
-      .request("http://localhost:5000/v1")
-      .post("/auth/user/login")
+      .request(app)
+      .post("/v1/auth/user/login")
       .set("content-type", "application/json")
       .send({
         email: "a@2a.com",
@@ -51,7 +51,7 @@ describe("Test user controller", () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(JSON.parse(res.text).message).to.equal("user created");
-
+        console.log(res.text);
         done();
       });
   });

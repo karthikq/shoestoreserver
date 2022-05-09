@@ -24,8 +24,8 @@ describe("testing product's route", () => {
 
   it("generate's user token", (done) => {
     chai
-      .request("http://localhost:5000/v1")
-      .post("/auth/user/signup")
+      .request(app)
+      .post("/v1/auth/user/signup")
       .set("content-type", "application/json")
       .send({
         email: "test2@test.com",
