@@ -63,7 +63,7 @@ describe("testing product's route", () => {
         userId: nanoid(),
       })
       .end((err, res) => {
-        expect(res.status).to.equal(401);
+        expect(res.status).to.equal(400);
         done();
       });
   });
