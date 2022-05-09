@@ -38,6 +38,8 @@ jobs:
       - run: npm i
       - run: npm test
 
+  deploy:
+    needs: build
       - name: Deploying to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
