@@ -38,7 +38,7 @@ jobs:
       - run: npm i
       - run: npm test
 
-      - name: Deploy to heroku
+      - name: Deploying to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
