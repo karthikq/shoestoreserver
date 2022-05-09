@@ -11,14 +11,15 @@ on:
 jobs:
   build:
     env:
+      CI: true
       MONGO_URL: mongodb://localhost:27017/test
+
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [16.x]
-        mongodb-version: 4.4
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        mongodb-version: ["4.0", "4.2", "4.4"]
 
     steps:
       - name: git checkout
