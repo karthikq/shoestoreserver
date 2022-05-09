@@ -3,7 +3,7 @@
 const mongoose = require("mongoose");
 const config = require("./config");
 const env = process.env.NODE_ENV || "development";
-console.log(env);
+console.log(env, "6");
 console.log(console.log(config.db[env]), "7");
 const connection = async () => {
   try {
