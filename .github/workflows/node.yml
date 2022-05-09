@@ -10,19 +10,29 @@ on:
 
 jobs:
   build:
+    env:
+      MONGO_URL: mongodb://localhost:27017/test
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [16.x]
+        mongodb-version: ["4.4"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v3
+      - name: git checkout
+        uses: actions/checkout@v3
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+
+      - name: Start MongoDB
+        uses: timgchile/mongodb-github-action@1.7.4
+        with: ${{matrix.mongodb-version}}
+
       - run: npm i
       - run: npm test
