@@ -38,8 +38,9 @@ jobs:
       - run: npm i
       - run: npm test
 
-      - name: Add remote origin
-        run: git remote add origin https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-
       - name: Deploy to heroku
-        run: git push heroku HEAD:master
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} #Must be unique in Heroku
+          heroku_email: "karthiktest99@gmail.com"
