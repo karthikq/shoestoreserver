@@ -43,6 +43,7 @@ describe("testing product's route", () => {
         user = JSON.parse(res.text).userData;
         token = JSON.parse(res.text).token;
         done();
+        console.log(err);
       });
   });
 
