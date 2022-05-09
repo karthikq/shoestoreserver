@@ -12,7 +12,11 @@ const connection = require("../utils/database");
 chai.use(chaihttp);
 
 describe("Test user controller", () => {
-  console.log(process.env.MONGO_URL);
+  before(function (done) {
+    User.deleteMany({}).then(() => {
+      done();
+    });
+  });
   it("User doesn't exist's", (done) => {
     chai
       .request(app)
