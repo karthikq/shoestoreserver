@@ -36,14 +36,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/karthikq/psqlstore.git"
+    "url": "git+https://github.com/karthikq/shoestoreserver.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/karthikq/psqlstore/issues"
+    "url": "https://github.com/karthikq/shoestoreserver/issues"
   },
-  "homepage": "https://github.com/karthikq/psqlstore#readme",
+  "homepage": "https://github.com/karthikq/shoestoreserver#readme",
   "description": ""
 }
