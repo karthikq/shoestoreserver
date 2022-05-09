@@ -10,7 +10,8 @@ on:
   
 jobs:
   build:
-    runs-on: ubuntu-lastest
+  
+    runs-on:  ubuntu-latest
   steps:
     - uses: actions/checkout@v3
     - name: uses nodejs V16
