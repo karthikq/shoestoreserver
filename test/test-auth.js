@@ -48,7 +48,7 @@ describe("Test user controller", () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(JSON.parse(res.text).message).to.equal("user created");
-        console.log(res.text);
+
         done();
       });
   });
