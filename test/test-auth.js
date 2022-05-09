@@ -11,22 +11,16 @@ const app = require("../app");
 chai.use(chaihttp);
 
 describe("Test user controller", () => {
-  // before(function (done) {
-  //   mongoose
-  //     .connect("mongodb://localhost:27017/test")
-  //     .then(() => {
-  //       console.log("connected to database");
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // });
+  before(function (done) {
+    User.deleteMany({}).then(() => {
+      done();
+    });
+  });
 
   it("User doesn't exist's", (done) => {
     chai
-      .request(app)
-      .post("/v1/auth/user/login")
+      .request("http://localhost:5000/v1")
+      .post("/auth/user/login")
       .set("content-type", "application/json")
       .send({
         email: "a@a.com",
@@ -43,8 +37,8 @@ describe("Test user controller", () => {
 
   it("test user signup", (done) => {
     chai
-      .request(app)
-      .post("/v1/auth/user/signup")
+      .request("http://localhost:5000/v1")
+      .post("/auth/user/signup")
       .set("content-type", "application/json")
       .send({
         email: "test@test.com",
@@ -66,8 +60,8 @@ describe("Test user controller", () => {
   it("test user login", (done) => {
     // sinon.stub(bcrypt, "compare").resolves({ result: true });
     chai
-      .request(app)
-      .post("/v1/auth/user/login")
+      .request("http://localhost:5000/v1")
+      .post("/auth/user/login")
       .set("content-type", "application/json")
       .send({
         email: "test@test.com",
@@ -79,9 +73,4 @@ describe("Test user controller", () => {
         done();
       });
   });
-  // after(function (done) {
-  //   User.deleteMany({}).then(() => {
-  //     done();
-  //   });
-  // });
 });

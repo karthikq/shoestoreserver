@@ -13,8 +13,15 @@ const User = require("../models/User");
 chai.use(chaihttp);
 
 describe("testing product's route", () => {
+  before(function (done) {
+    Product.deleteMany({}).then(() => {
+      done();
+    });
+  });
+
   let user;
   let token;
+
   it("generate's user token", (done) => {
     chai
       .request("http://localhost:5000/v1")
@@ -41,8 +48,8 @@ describe("testing product's route", () => {
 
   it("creating product should through 400 not authorized error", (done) => {
     chai
-      .request(app)
-      .post("/v1/product/create")
+      .request("http://localhost:5000/v1")
+      .post("/product/create")
       .set("content-type", "application/json")
       .send({
         p_id: nanoid(),
@@ -72,8 +79,8 @@ describe("testing product's route", () => {
       userId: user._id,
     };
     chai
-      .request(app)
-      .post("/v1/product/create")
+      .request("http://localhost:5000/v1")
+      .post("/product/create")
       .set("content-type", "application/json")
       .set("Authorization", `Bearer ${token}`)
       .send({ productDetails })
@@ -84,7 +91,4 @@ describe("testing product's route", () => {
         done();
       });
   });
-  //   after(function (done) {
-  //     Product.deleteMany({}).then(() => {});
-  //   });
 });
