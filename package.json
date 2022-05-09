@@ -27,8 +27,9 @@
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js",
-    "test": "set NODE_ENV=test&& mocha --timeout 10000 --exit",
+    "test": "NODE_ENV=test mocha --timeout 10000 --exit",
     "client": "npm start --prefix ../client",
+    "build": "npm run build --prefix ../client",
     "dev": "concurrently  \"npm run client\" \"npm run server\""
   },
   "engines": {
