@@ -8,13 +8,12 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const sinon = require("sinon");
 const app = require("../app");
+const connection = require("../utils/database");
 chai.use(chaihttp);
 
 describe("Test user controller", () => {
-  before(function (done) {
-    User.deleteMany({}).then(() => {
-      done();
-    });
+  before(function () {
+    connection();
   });
 
   it("User doesn't exist's", (done) => {
