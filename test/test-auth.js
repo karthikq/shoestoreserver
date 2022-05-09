@@ -10,7 +10,7 @@ const sinon = require("sinon");
 const app = require("../app");
 chai.use(chaihttp);
 
-describe("Test User login", () => {
+describe("Test user controller", () => {
   // before(function (done) {
   //   mongoose
   //     .connect("mongodb://localhost:27017/test")
@@ -79,9 +79,9 @@ describe("Test User login", () => {
         done();
       });
   });
-  after(function (done) {
-    User.deleteMany({}).then(() => {
-      done();
-    });
-  });
+  // after(function (done) {
+  //   User.deleteMany({}).then(() => {
+  //     done();
+  //   });
+  // });
 });
