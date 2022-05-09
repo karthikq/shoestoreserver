@@ -23,7 +23,7 @@ describe("Test user controller", () => {
       .post("/auth/user/login")
       .set("content-type", "application/json")
       .send({
-        email: "a@a.com",
+        email: "a@2a.com",
         password: "qweqwe",
       })
       .end((err, res) => {
