@@ -12,7 +12,6 @@ jobs:
   build:
     env:
       MONGO_URL: mongodb://localhost/test
-
     runs-on: ubuntu-latest
 
     strategy:
