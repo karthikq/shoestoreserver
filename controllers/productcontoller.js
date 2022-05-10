@@ -21,9 +21,9 @@ exports.getProducts = async (req, res, next) => {
 };
 
 exports.createProduct = async (req, res, next) => {
-  const { p_name, p_desp, p_price, p_img, p_category } =
-    req.body.productDetails;
+  const { p_name, p_desp, p_price, p_img, p_category } = req.body;
   const { errors } = validationResult(req);
+  console.log(errors);
   if (errors.length > 0) {
     return res.status(422).json({ errors });
   }
