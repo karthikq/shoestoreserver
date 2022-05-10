@@ -15,7 +15,7 @@ exports.GoogleAuth = async (passport) => {
           clientID:
             "774074967471-7c0fnsqt2rve033n7hc4s33keqfbf4k1.apps.googleusercontent.com",
           clientSecret: "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",
-          callbackURL: backendUrl() + "/auth/google/callback",
+          callbackURL: backendUrl() + "/v1/auth/google/callback",
         },
         async function (accessToken, refreshToken, profile, cb) {
           const { displayName, photos, emails, id } = profile;

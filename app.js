@@ -44,7 +44,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("server is running");
 });
+
 app.use("/v1", api);
+
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
   const message = error.message;

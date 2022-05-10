@@ -1,7 +1,7 @@
 /** @format */
 
 const mongoose = require("mongoose");
-
+const { validationResult } = require("express-validator");
 /** @format */
 const Product = mongoose.model("Product");
 const { nanoid } = require("nanoid");
@@ -23,6 +23,10 @@ exports.getProducts = async (req, res, next) => {
 exports.createProduct = async (req, res, next) => {
   const { p_name, p_desp, p_price, p_img, p_category } =
     req.body.productDetails;
+  const { errors } = validationResult(req);
+  if (errors.length > 0) {
+    return res.status(422).json({ errors });
+  }
   try {
     const newProduct = new Product({
       p_id: nanoid(),
@@ -37,6 +41,49 @@ exports.createProduct = async (req, res, next) => {
     const data = await newProduct.save();
     res.status(201).json(data);
   } catch (error) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+exports.editProduct = async (req, res, next) => {
+  const { p_name, p_desp, p_price, p_img, p_category } = req.body;
+  const { prodId } = req.params;
+
+  try {
+    const findProduct = await Product.findOne({ p_id: prodId });
+    if (!findProduct) {
+      res.status(404).json({ message: "product not found" });
+    } else {
+      if (findProduct.userId.toString() !== req.user._id.toString()) {
+        return res.status(403).json({ message: "NOT ALLOWED" });
+      } else {
+        const fetchProduct = await Product.findOneAndUpdate(
+          { p_id: prodId },
+          {
+            $set: {
+              p_name,
+              p_desp,
+              p_img,
+              price: p_price,
+              keywords: p_category,
+            },
+          },
+          {
+            new: true,
+          }
+        );
+        if (!fetchProduct) {
+          res.status(404).json({ message: "product not found" });
+        } else {
+          res
+            .status(201)
+            .json({ data: fetchProduct, message: "product updated" });
+        }
+      }
+    }
+  } catch (error) {
     console.log(error);
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -44,8 +91,7 @@ exports.createProduct = async (req, res, next) => {
     next(err);
   }
 };
-
-module.exports.updateProductview = async (req, res, next) => {
+exports.updateProductview = async (req, res, next) => {
   const prodId = req.params.prodId;
 
   try {

@@ -79,7 +79,7 @@ exports.login = async (req, res, next) => {
 exports.signup = async (req, res, next) => {
   const { email, password, confirmPassword, firstname, lastname } = req.body;
   const { errors } = validationResult(req);
-  console.log(errors);
+
   if (errors.length > 0) {
     return res.status(422).json({ errors });
   }
