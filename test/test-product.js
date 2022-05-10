@@ -75,7 +75,7 @@ describe("testing product's route", () => {
       p_img: ["test.com"],
       p_desp: "test",
       p_price: 100,
-      keywords: ["test"],
+      p_category: ["test"],
       date: new Date().toLocaleString(),
       userId: user._id,
     };
