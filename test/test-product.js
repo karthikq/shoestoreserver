@@ -4,11 +4,10 @@ const expect = require("chai").expect;
 const chai = require("chai");
 
 const chaihttp = require("chai-http");
-const { default: mongoose } = require("mongoose");
+
 const { nanoid } = require("nanoid");
 const app = require("../app");
 const Product = require("../models/Product");
-const User = require("../models/User");
 
 chai.use(chaihttp);
 

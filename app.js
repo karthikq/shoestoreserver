@@ -42,7 +42,7 @@ app.use(express.json());
 //   res.json({ CSRFToken: req.csrfToken() });
 // });
 app.get("/", (req, res) => {
-  res.send("server is running");
+  res.redirect("/v1");
 });
 
 app.use("/v1", api);
