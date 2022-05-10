@@ -22,7 +22,7 @@ route.post(
   "/create",
   [
     body("p_name")
-      .isLength({ min: 5, max: 12 })
+      .isLength({ min: 1, max: 12 })
       .withMessage("maxium of 12 character's are allowed")
       .trim(),
     body("p_desp")
