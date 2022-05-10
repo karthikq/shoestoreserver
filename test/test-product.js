@@ -71,10 +71,10 @@ describe("testing product's route", () => {
   it("Should create a product", (done) => {
     const productDetails = {
       p_id: nanoid(),
-      p_name: "testproduct",
-      p_img: "testproduct.com",
+      p_name: "testprod",
+      p_img: ["test.com"],
       p_desp: "test",
-      p_price: "100",
+      p_price: 100,
       keywords: ["test"],
       date: new Date().toLocaleString(),
       userId: user._id,

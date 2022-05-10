@@ -34,6 +34,7 @@ route.post(
       .trim()
       .withMessage("Price must be a number and it is required"),
     body("p_img").isArray().withMessage("Must be an array of images"),
+    body("p_category").isArray().withMessage("Must be an array of keywords"),
   ],
   isAuth,
   createProduct
