@@ -16,7 +16,10 @@ exports.getProducts = async (req, res, next) => {
 
     return res.status(200).json({ products });
   } catch (error) {
-    console.log(error);
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
   }
 };
 
@@ -50,7 +53,11 @@ exports.createProduct = async (req, res, next) => {
 exports.editProduct = async (req, res, next) => {
   const { p_name, p_desp, p_price, p_img, p_category } = req.body;
   const { prodId } = req.params;
-
+  const { errors } = validationResult(req);
+  console.log(errors);
+  if (errors.length > 0) {
+    return res.status(422).json({ errors });
+  }
   try {
     const findProduct = await Product.findOne({ p_id: prodId });
     if (!findProduct) {

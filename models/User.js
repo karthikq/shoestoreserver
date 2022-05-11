@@ -13,7 +13,9 @@ const UserSchema = new Schema(
     lastname: String,
     profileUrl: String,
     googleId: String,
-    password: String,
+    password: { type: String, select: false },
+    resetToken: String,
+    tokenExpirationDate: String,
     favProducts: [
       {
         product: {

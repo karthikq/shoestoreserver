@@ -18,6 +18,8 @@ const {
   login,
   signup,
   logoutUser,
+  checkUserEmail,
+  checkUserToken,
 } = require("../controllers/authcontroller");
 
 route.get(
@@ -81,15 +83,38 @@ route.post(
       .isAlphanumeric()
       .trim()
       .isLength({ min: 5 }),
-    body("confirmPassword").custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error("Password's doesn't match");
-      }
-      return true;
-    }),
+    body("confirmPassword")
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error("Password's doesn't match");
+        }
+        return true;
+      }),
   ],
   signup
 );
 
 route.post("/user/logout", logoutUser);
+
+route.post("/check/useremail/:id", checkUserEmail);
+route.post(
+  "/check/token/:id",
+  [
+    body("newpassword", "Password must be 5 char's long")
+      .trim()
+      .isAlphanumeric()
+      .isLength({ min: 5 }),
+    body("confirmpassword")
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.newpassword) {
+          throw new Error("Password's doesn't match");
+        }
+        return true;
+      }),
+  ],
+  checkUserToken
+);
+
 module.exports = route;

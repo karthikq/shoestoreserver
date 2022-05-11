@@ -65,7 +65,11 @@ exports.addToFav = async (req, res, next) => {
 exports.addTocart = async (req, res, next) => {
   const prodId = req.params.prodId;
   try {
-    console.log(req.user.cart.items[0]);
+    const checkUser = await User.findOne({ _id: req.user._id });
+
+    if (checkUser._id.toString() === req.user._id.toString()) {
+      return res.status(401).json({ message: "NOT ALLOWED" });
+    }
     await req.user.addtoCart(prodId);
     const userData = await User.findOne({ _id: req.user._id })
       .populate("cart.items.product")
