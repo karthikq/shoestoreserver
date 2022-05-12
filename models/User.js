@@ -53,7 +53,7 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.methods.addtoFav = async function (prodId) {
+UserSchema.methods.addtoFav = async function (prodId, prodDetails) {
   const favProducts = this.favProducts;
   const checkProduct = favProducts.find(
     (item) => item.product._id.toString() === prodId
@@ -65,10 +65,15 @@ UserSchema.methods.addtoFav = async function (prodId) {
     );
     this.favProducts = filterdData;
   } else {
-    console.log("S3");
-    favProducts.push({
-      product: prodId,
-    });
+    if (prodDetails.userId.toString() === this._id.toString()) {
+      const error = new Error("Not allowed");
+      error.statusCode = 401;
+      throw error;
+    } else {
+      favProducts.push({
+        product: prodId,
+      });
+    }
   }
   return await this.save();
 };

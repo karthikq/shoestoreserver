@@ -45,7 +45,9 @@ exports.addToFav = async (req, res, next) => {
   const prodId = req.params.prodId;
 
   try {
-    const data = await req.user.addtoFav(prodId);
+    const prodDetails = await Product.findOne({ _id: prodId });
+
+    await req.user.addtoFav(prodId, prodDetails);
     // const resp = data
     //   .populate("cart.items.product")
     //   .populate("favProducts.product")
