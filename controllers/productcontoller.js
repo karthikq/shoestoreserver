@@ -40,6 +40,7 @@ exports.createProduct = async (req, res, next) => {
       keywords: p_category,
       date: new Date().toLocaleString(),
       userId: req.user._id,
+      totalRating: 0,
     });
     const data = await newProduct.save();
     res.status(201).json(data);

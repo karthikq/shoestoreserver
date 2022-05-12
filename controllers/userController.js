@@ -1,6 +1,8 @@
 /** @format */
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+const Product = mongoose.model("Product");
+
 const { validationResult } = require("express-validator");
 
 exports.fetchuser = async (req, res, next) => {
@@ -64,10 +66,11 @@ exports.addToFav = async (req, res, next) => {
 };
 exports.addTocart = async (req, res, next) => {
   const prodId = req.params.prodId;
-  try {
-    const checkUser = await User.findOne({ _id: req.user._id });
 
-    if (checkUser._id.toString() === req.user._id.toString()) {
+  try {
+    const prodDetails = await Product.findOne({ _id: prodId });
+
+    if (prodDetails.userId.toString() === req.user._id.toString()) {
       return res.status(401).json({ message: "NOT ALLOWED" });
     }
     await req.user.addtoCart(prodId);
