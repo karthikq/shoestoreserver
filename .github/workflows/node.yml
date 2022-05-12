@@ -12,6 +12,7 @@ jobs:
   build:
     env:
       MONGO_URL: mongodb://localhost/test
+      NODE_ENV: test
       JWT_SECRECT: ${{ secrets.JWT_SECRECT }}
     runs-on: ubuntu-latest
 
