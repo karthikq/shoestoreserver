@@ -10,7 +10,7 @@ COPY . .
 
 USER node
 
-CMD ["npm","run","start"]
+# CMD ["npm","run","start"]
 
 EXPOSE 5000
 
