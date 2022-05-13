@@ -14,7 +14,7 @@ USER node
 
 CMD ["npm","run","start"]
 
-EXPOSE $PORT
+ 
 
 
 
