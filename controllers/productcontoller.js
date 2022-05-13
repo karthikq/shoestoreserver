@@ -7,6 +7,7 @@ const Product = mongoose.model("Product");
 const { nanoid } = require("nanoid");
 const _ = require("lodash");
 const User = require("../models/User");
+const moment = require("moment");
 
 exports.getProducts = async (req, res, next) => {
   try {
@@ -38,9 +39,10 @@ exports.createProduct = async (req, res, next) => {
       p_desp,
       price: p_price,
       keywords: p_category,
-      date: new Date().toLocaleString(),
+      date: moment().format("MMMM Do YYYY, h:mm:ss a"),
       userId: req.user._id,
       totalRating: 0,
+      sortDate: new Date(),
     });
     const data = await newProduct.save();
     res.status(201).json(data);

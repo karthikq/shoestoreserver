@@ -12,7 +12,7 @@ USER node
 
 CMD ["npm","run","start"]
 
-EXPOSE 5000
+
 
 
 

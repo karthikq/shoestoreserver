@@ -60,6 +60,7 @@ const ProductSchema = new Schema(
     ],
     keywords: [],
     date: String,
+    sortDate: Date,
   },
   {
     timestamps: true,
