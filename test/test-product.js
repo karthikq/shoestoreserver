@@ -58,8 +58,6 @@ describe("testing product's route", () => {
         p_desp: "test",
         price: 100,
         keywords: ["test"],
-        p_brand: "sssss",
-        p_type: "shoes",
         date: new Date().toLocaleString(),
         userId: nanoid(),
       })
@@ -75,6 +73,8 @@ describe("testing product's route", () => {
       p_name: "testprod",
       p_img: ["test.com"],
       p_desp: "test",
+      p_brand: "sssss",
+      p_type: "shoes",
       p_price: 100,
       p_category: ["test"],
       date: new Date().toLocaleString(),

@@ -25,6 +25,14 @@ route.post(
       .isLength({ min: 1, max: 12 })
       .withMessage("maxium of 12 character's are allowed")
       .trim(),
+    body("p_brand")
+      .isLength({ min: 2, max: 25 })
+      .withMessage("maxium of 25 character's are allowed")
+      .trim(),
+    body("p_type")
+      .isLength({ min: 1, max: 20 })
+      .withMessage("maxium of 20 character's are allowed")
+      .trim(),
     body("p_desp")
       .isLength({ min: 0, max: 200 })
       .withMessage("Must be less than 200 character's")
