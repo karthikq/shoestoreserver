@@ -58,6 +58,8 @@ describe("testing product's route", () => {
         p_desp: "test",
         price: 100,
         keywords: ["test"],
+        p_brand: "sssss",
+        p_type: "shoes",
         date: new Date().toLocaleString(),
         userId: nanoid(),
       })
