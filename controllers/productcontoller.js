@@ -25,18 +25,22 @@ exports.getProducts = async (req, res, next) => {
 };
 
 exports.createProduct = async (req, res, next) => {
-  const { p_name, p_desp, p_price, p_img, p_category } = req.body;
+  const { p_name, p_desp, p_price, p_img, p_category, p_brand, p_type } =
+    req.body;
   const { errors } = validationResult(req);
-  console.log(errors);
+
   if (errors.length > 0) {
     return res.status(422).json({ errors });
   }
+
   try {
     const newProduct = new Product({
       p_id: nanoid(),
       p_name,
       p_img,
       p_desp,
+      p_brand,
+      p_type,
       price: p_price,
       keywords: p_category,
       date: moment().format("MMMM Do YYYY, h:mm:ss a"),

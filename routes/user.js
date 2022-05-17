@@ -35,6 +35,12 @@ route.put(
       .withMessage("Minimum of 3 character's is required"),
     body("lastname").trim().isString().withMessage("Must be String"),
     body("profileUrl").isURL().withMessage("Image must be a valid Url"),
+    body("phonenumber")
+      .isMobilePhone("en-IN")
+      .trim()
+      .withMessage("Must be an Indian mobile no"),
+    body("address", "State must not contain any numbers").trim(),
+    body("city", "City must not contain any numbers").trim(),
   ],
   isAuth,
   updateUser

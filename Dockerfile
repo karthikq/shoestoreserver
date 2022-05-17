@@ -3,7 +3,7 @@ FROM node:lts-alpine
 
 WORKDIR /app
 
-# ENV PORT=5000
+ENV NODE_ENV="production"
 
 COPY package*.json ./
 RUN npm install 
@@ -14,7 +14,7 @@ USER node
 
 CMD ["npm","run","start"]
 
- 
+EXPOSE $PORT
 
 
 
