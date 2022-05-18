@@ -16,6 +16,16 @@ const UserSchema = new Schema(
     password: { type: String, select: false },
     resetToken: String,
     tokenExpirationDate: String,
+    userLocation: {
+      country: String,
+      state: String,
+      city: String,
+    },
+    phoneDetails: {
+      value: String,
+      details: Object,
+    },
+
     favProducts: [
       {
         product: {

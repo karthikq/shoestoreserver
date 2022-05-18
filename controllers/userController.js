@@ -93,14 +93,13 @@ exports.addTocart = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   const { userId } = req.params;
-  const { email, firstname, lastname, profileUrl } = req.body;
+  const { email, firstname, lastname, profileUrl, phoneDetails, userLocation } =
+    req.body;
 
   const { errors } = validationResult(req);
-  console.log(req.body);
-  console.log(errors);
+
   try {
     if (errors.length > 0) {
-      console.log(errors);
       return res.status(422).json({ errors });
     }
     const findUser = await User.findOne({ _id: userId })
@@ -112,15 +111,25 @@ exports.updateUser = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
-    // const username = firstname + " " + lastname;
-    // findUser.username = username;
-    // findUser.profileUrl = profileUrl;
-    // findUser.firstname = firstname;
-    // findUser.lastname = lastname;
-    // findUser.email = email;
-    // const result = await findUser.save();
+    if (phoneDetails.value && userLocation.country) {
+      if (
+        phoneDetails.details.countryCode.toUpperCase() !== userLocation.country
+      ) {
+        return res.status(400).json({ message: "Location's doesn't match" });
+      }
+    }
+    const username = firstname + " " + lastname;
+    findUser.username = username;
+    findUser.profileUrl = profileUrl;
+    findUser.firstname = firstname;
+    findUser.lastname = lastname;
+    findUser.email = email;
+    findUser.userLocation = userLocation;
+    findUser.phoneDetails = phoneDetails;
 
-    // return res.status(201).json({ userData: result });
+    const result = await findUser.save();
+
+    return res.status(201).json({ userData: result });
   } catch (error) {
     console.log(error);
     if (!error.statusCode) {
