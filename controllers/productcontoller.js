@@ -58,7 +58,8 @@ exports.createProduct = async (req, res, next) => {
   }
 };
 exports.editProduct = async (req, res, next) => {
-  const { p_name, p_desp, p_price, p_img, p_category } = req.body;
+  const { p_name, p_desp, p_price, p_img, p_category, p_type, p_brand } =
+    req.body;
   const { prodId } = req.params;
   const { errors } = validationResult(req);
   console.log(errors);
@@ -80,6 +81,8 @@ exports.editProduct = async (req, res, next) => {
               p_name,
               p_desp,
               p_img,
+              p_type,
+              p_brand,
               price: p_price,
               keywords: p_category,
             },
@@ -282,8 +285,7 @@ module.exports.singleProduct = async (req, res, next) => {
 
 exports.addRating = async (req, res, next) => {
   const { prodId } = req.params;
-  const { count } = req.query;
-
+  const review = req.body;
   try {
     const findProduct = await Product.findOne({ p_id: prodId })
       .populate("rating.user")
@@ -297,7 +299,8 @@ exports.addRating = async (req, res, next) => {
 
     const data = {
       user: req.user._id.toString(),
-      value: parseInt(count),
+      value: parseInt(review.rating),
+      text: review.text,
     };
 
     if (findProduct.rating.length > 0) {

@@ -39,6 +39,7 @@ const ProductSchema = new Schema(
           max: 5,
           default: 0,
         },
+        text: String,
       },
     ],
     viewCount: {
