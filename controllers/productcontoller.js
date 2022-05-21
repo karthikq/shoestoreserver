@@ -305,10 +305,31 @@ exports.addRating = async (req, res, next) => {
 
     if (findProduct.rating.length > 0) {
       const findUser = findProduct.rating?.find((elem) => {
-        return elem.user === req.user._id.toString();
+        return elem.user._id.toString() === req.user._id.toString();
       });
       if (findUser) {
-        return res.json({ message: "already rated", status: 400 });
+        const user = await Product.findOneAndUpdate(
+          {
+            p_id: prodId,
+            "rating.user": req.user._id,
+          },
+          {
+            $set: { "rating.$.text": data.text, "rating.$.value": data.value },
+          },
+          {
+            new: true,
+          }
+        )
+          .populate("rating.user")
+          .populate("likes.userId")
+          .exec();
+        const total = _.sum(user.rating.map((item) => item.value));
+        user.totalRating = total / user.rating.length;
+        await user.save();
+
+        return res
+          .status(201)
+          .json({ message: "rating added", updatedProduct: user });
       }
     }
     const updatedProduct = await Product.findOneAndUpdate(

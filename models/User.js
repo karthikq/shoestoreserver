@@ -75,15 +75,15 @@ UserSchema.methods.addtoFav = async function (prodId, prodDetails) {
     );
     this.favProducts = filterdData;
   } else {
-    if (prodDetails.userId.toString() === this._id.toString()) {
-      const error = new Error("Not allowed");
-      error.statusCode = 401;
-      throw error;
-    } else {
-      favProducts.push({
-        product: prodId,
-      });
-    }
+    // if (prodDetails.userId.toString() === this._id.toString()) {
+    //   const error = new Error("Not allowed");
+    //   error.statusCode = 401;
+    //   throw error;
+    // } else {
+    favProducts.push({
+      product: prodId,
+    });
+    // }
   }
   return await this.save();
 };
