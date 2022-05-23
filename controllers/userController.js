@@ -4,6 +4,7 @@ const User = mongoose.model("User");
 const Product = mongoose.model("Product");
 
 const { validationResult } = require("express-validator");
+const e = require("express");
 
 exports.fetchuser = async (req, res, next) => {
   try {
@@ -56,6 +57,8 @@ exports.addToFav = async (req, res, next) => {
     const userData = await User.findOne({ _id: req.user._id })
       .populate("cart.items.product")
       .populate("favProducts.product")
+      .populate("following.users.user")
+      .populate("followers.users.user")
       .exec();
 
     return res.status(201).json({ message: "changed", userData: userData });
@@ -79,6 +82,8 @@ exports.addTocart = async (req, res, next) => {
     const userData = await User.findOne({ _id: req.user._id })
       .populate("cart.items.product")
       .populate("favProducts.product")
+      .populate("following.users.user")
+      .populate("followers.users.user")
       .exec();
 
     res.status(201).json({ message: "added to cart", userData: userData });
@@ -105,6 +110,8 @@ exports.updateUser = async (req, res, next) => {
     const findUser = await User.findOne({ _id: userId })
       .populate("cart.items.product")
       .populate("favProducts.product")
+      .populate("following.users.user")
+      .populate("followers.users.user")
       .exec();
     if (!findUser) {
       const error = new Error("User not found");
@@ -147,6 +154,8 @@ exports.updateCart = async (req, res, next) => {
     const userData = await User.findOne({ _id: req.user._id })
       .populate("cart.items.product")
       .populate("favProducts.product")
+      .populate("following.users.user")
+      .populate("followers.users.user")
       .exec();
 
     res.status(201).json({ message: "Item Updated", userData: userData });
@@ -170,5 +179,112 @@ exports.removeCartItem = async (req, res, next) => {
     }
     next(error);
     console.log(error);
+  }
+};
+
+exports.FollowUserApi = async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    if (userId.toString() === req.user._id.toString()) {
+      return res.status(400).json({ message: "not allowed" });
+    }
+
+    const findUser = await User.findOne({ _id: userId });
+
+    const users = [
+      {
+        user: req.user._id,
+      },
+    ];
+
+    if (findUser) {
+      const checkAlreadyFollowing = req.user.following.users.some((item) =>
+        console.log(item.user.toString(), userId)
+      );
+
+      const checkFollowers = findUser.followers.users.some(
+        (item) => item.user.toString() === req.user._id.toString()
+      );
+
+      if (checkFollowers) {
+        const currentUserData = await User.findOneAndUpdate(
+          { _id: req.user._id },
+          {
+            $pull: {
+              "following.users": { user: userId },
+            },
+          },
+          {
+            new: true,
+          }
+        )
+          .populate("cart.items.product")
+          .populate("favProducts.product")
+          .populate("following.users.user")
+          .populate("followers.users.user")
+          .exec();
+
+        const foundUser = await User.findByIdAndUpdate(
+          { _id: userId },
+          {
+            $pull: {
+              "followers.users": { user: req.user._id },
+            },
+          },
+          {
+            new: true,
+          }
+        )
+          .populate("cart.items.product")
+          .populate("favProducts.product")
+          .populate("following.users.user")
+          .populate("followers.users.user")
+          .exec();
+
+        return res.status(201).json({ userData: currentUserData, foundUser });
+      } else {
+        const foundUser = await User.findOneAndUpdate(
+          { _id: userId },
+          {
+            $push: { "followers.users": users },
+          },
+          {
+            new: true,
+          }
+        )
+          .populate("cart.items.product")
+          .populate("favProducts.product")
+          .populate("following.users.user")
+          .populate("followers.users.user")
+          .exec();
+
+        const updateCurrentUser = await User.findOneAndUpdate(
+          { _id: req.user._id },
+          {
+            $push: { "following.users": [{ user: userId }] },
+          },
+          {
+            new: true,
+          }
+        )
+          .populate("cart.items.product")
+          .populate("favProducts.product")
+          .populate("following.users.user")
+          .populate("followers.users.user")
+          .exec();
+        return res
+          .status(201)
+          .json({ userData: updateCurrentUser, foundUser: foundUser });
+      }
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
   }
 };

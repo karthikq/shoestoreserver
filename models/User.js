@@ -25,7 +25,20 @@ const UserSchema = new Schema(
       value: String,
       details: Object,
     },
-
+    followers: {
+      users: [
+        {
+          user: Schema.Types.ObjectId,
+        },
+      ],
+    },
+    following: {
+      users: [
+        {
+          user: String,
+        },
+      ],
+    },
     favProducts: [
       {
         product: {

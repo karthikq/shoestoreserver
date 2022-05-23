@@ -13,6 +13,7 @@ const {
   updateCart,
   removeCartItem,
   fetchIndUser,
+  FollowUserApi,
 } = require("../controllers/userController");
 const { isAuth } = require("../middleware/isAuth");
 
@@ -39,5 +40,7 @@ route.put(
   isAuth,
   updateUser
 );
+
+route.post("/follow/:userId", isAuth, FollowUserApi);
 
 module.exports = route;
