@@ -7,6 +7,7 @@ const { validationResult } = require("express-validator");
 const { frontendUrl } = require("./FrontendUrl");
 const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
+const passport = require("passport");
 
 const transport = nodeMailer.createTransport({
   service: "gmail",
@@ -18,9 +19,17 @@ const transport = nodeMailer.createTransport({
     rejectUnauthorized: true,
   },
 });
+var redirectPath;
 
 exports.getSignin = (req, res, next) => {
-  console.log("S");
+  const { query } = req.query;
+  if (query) {
+    redirectPath = frontendUrl() + query;
+  } else {
+    redirectPath = frontendUrl();
+  }
+  console.log(redirectPath);
+  next();
 };
 
 exports.googleCallback = (req, res, next) => {
@@ -33,7 +42,7 @@ exports.googleCallback = (req, res, next) => {
     { expiresIn: "12h" }
   );
 
-  res.redirect(frontendUrl() + "/?token=" + token);
+  res.redirect(redirectPath + "?token=" + token);
 };
 
 exports.getSignup = (req, res, next) => {};

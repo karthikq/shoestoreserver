@@ -24,8 +24,8 @@ const {
 
 route.get(
   "/google/login",
-  passport.authenticate("google", { scope: ["profile", "email"] }),
-  getSignin
+  getSignin,
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 route.get(

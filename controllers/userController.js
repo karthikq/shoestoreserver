@@ -5,6 +5,7 @@ const Product = mongoose.model("Product");
 
 const { validationResult } = require("express-validator");
 const e = require("express");
+const UserFollow = require("../models/UserFollow");
 
 exports.fetchuser = async (req, res, next) => {
   try {
@@ -206,7 +207,66 @@ exports.FollowUserApi = async (req, res, next) => {
       const checkFollowers = findUser.followers.users.some(
         (item) => item.user.toString() === req.user._id.toString()
       );
+      // const getUser = await UserFollow.findOne({ _id: req.user._id });
+      // const userFollow = await UserFollow.findOne({ _id: userId });
 
+      // if (!getUser) {
+      //   const newFollow = new UserFollow({
+      //     userId: req.user._id,
+      //     following: {
+      //       users: [
+      //         {
+      //           user: mongoose.Types.ObjectId(userId),
+      //         },
+      //       ],
+      //     },
+      //   });
+      //   await newFollow.save();
+      //   execFollow(newFollow);
+      // } else {
+      //   const updateCurrentUser = await UserFollow.findOneAndUpdate(
+      //     { _id: req.user._id },
+      //     {
+      //       $push: { "following.users": [{ user: userId }] },
+      //     },
+      //     {
+      //       new: true,
+      //     }
+      //   );
+      //   execFollow(updateCurrentUser);
+      // }
+
+      // async function execFollow(currentUser) {
+      //   if (!userFollow) {
+      //     const newFollowing = new UserFollow({
+      //       userId: mongoose.Types.ObjectId(userId),
+      //       followers: {
+      //         users: [
+      //           {
+      //             user: req.user._id,
+      //           },
+      //         ],
+      //       },
+      //     });
+      //     await newFollowing.save();
+      //     return res
+      //       .status(201)
+      //       .json({ userData: currentUser, foundUser: newFollowing });
+      //   } else {
+      //     const foundUser = await User.findOneAndUpdate(
+      //       { _id: userId },
+      //       {
+      //         $push: { "followers.users": users },
+      //       },
+      //       {
+      //         new: true,
+      //       }
+      //     );
+      //   }
+      //   return res
+      //     .status(201)
+      //     .json({ userData: currentUser, foundUser: foundUser });
+      // }
       if (checkFollowers) {
         const currentUserData = await User.findOneAndUpdate(
           { _id: req.user._id },
