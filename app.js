@@ -3,8 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connection = require("./utils/database");
-const User = require("./models/User");
-const { nanoid } = require("nanoid");
+
+const ip = require("ip");
 
 require("./models/Product");
 const api = require("./routes/api");
@@ -42,6 +42,7 @@ app.use(express.json());
 //   res.json({ CSRFToken: req.csrfToken() });
 // });
 app.get("/", (req, res) => {
+  ip.address();
   res.redirect("/v1");
 });
 

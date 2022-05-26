@@ -14,6 +14,8 @@ jobs:
       MONGO_URL: mongodb://localhost/test
       NODE_ENV: test
       JWT_SECRECT: ${{ secrets.JWT_SECRECT }}
+      KEY_ID: ${{ secrets.KEY_ID }}
+      KEY_SECRET: ${{ secrets.KEYSECRET }}
     runs-on: ubuntu-latest
 
     strategy:
