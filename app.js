@@ -8,6 +8,7 @@ const ip = require("ip");
 
 require("./models/Product");
 const api = require("./routes/api");
+const { getUserip } = require("./UserIp/Getuserip");
 
 const Port = process.env.PORT || 5000;
 
@@ -42,7 +43,6 @@ app.use(express.json());
 //   res.json({ CSRFToken: req.csrfToken() });
 // });
 app.get("/", (req, res) => {
-  ip.address();
   res.redirect("/v1");
 });
 
