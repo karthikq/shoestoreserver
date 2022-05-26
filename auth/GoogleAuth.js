@@ -25,7 +25,11 @@ exports.GoogleAuth = async (passport) => {
           const firstname = displayName.split(" ")[0];
           const lastname = displayName.split(" ")[1] || "";
           try {
-            const findUser = await User.findOne({ email });
+            const findUser = await User.findOne({ email })
+              .populate("cart.items.product")
+              .populate("favProducts.product")
+              .populate("order.products.product_id")
+              .exec();
 
             if (!findUser) {
               const userId = nanoid();
