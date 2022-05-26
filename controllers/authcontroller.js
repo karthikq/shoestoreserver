@@ -8,6 +8,7 @@ const { frontendUrl } = require("./FrontendUrl");
 const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
 const passport = require("passport");
+const { getUserip } = require("../UserIp/Getuserip");
 
 const transport = nodeMailer.createTransport({
   service: "gmail",
@@ -129,6 +130,7 @@ exports.signup = async (req, res, next) => {
               lastname,
               username,
               profileUrl,
+              userIp: await getUserip(),
             });
 
             await registerNewUser.save();

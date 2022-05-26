@@ -36,6 +36,7 @@ exports.isAuth = (req, res, next) => {
         const userData = await User.findOne({ _id: decodedToken.userId })
           .populate("cart.items.product")
           .populate("favProducts.product")
+          .populate("order.products.product_id")
           .exec();
 
         if (!userData) {

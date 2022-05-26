@@ -21,6 +21,7 @@
     "nodemailer": "^6.7.5",
     "passport": "^0.5.2",
     "passport-google-oauth20": "^2.0.0",
+    "razorpay": "^2.8.1",
     "sinon": "^13.0.2"
   },
   "name": "server",

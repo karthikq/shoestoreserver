@@ -65,10 +65,16 @@ const UserSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "Product",
           },
+          orderId: String,
+          payment_id: String,
+          quantity: Number,
         },
       ],
-      quantity: Number,
     },
+    userIp: {
+      type: Object,
+    },
+
     date: String,
   },
   {

@@ -4,7 +4,7 @@ const User = mongoose.model("User");
 const Product = mongoose.model("Product");
 
 const { validationResult } = require("express-validator");
-const e = require("express");
+
 const UserFollow = require("../models/UserFollow");
 
 exports.fetchuser = async (req, res, next) => {
@@ -25,10 +25,13 @@ exports.fetchuser = async (req, res, next) => {
 };
 
 exports.fetchIndUser = async (req, res, next) => {
-  console.log("S");
   const { userId } = req.params;
   try {
-    const findUser = await User.findOne({ _id: userId });
+    const findUser = await User.findOne({ _id: userId })
+      .populate("cart.items.product")
+      .populate("favProducts.product")
+      .populate("order.products.product_id")
+      .exec();
 
     if (findUser) {
       res.status(200).json({ foundUserData: findUser });
@@ -58,8 +61,7 @@ exports.addToFav = async (req, res, next) => {
     const userData = await User.findOne({ _id: req.user._id })
       .populate("cart.items.product")
       .populate("favProducts.product")
-      .populate("following.users.user")
-      .populate("followers.users.user")
+      .populate("order.products.product_id")
       .exec();
 
     return res.status(201).json({ message: "changed", userData: userData });
@@ -83,8 +85,7 @@ exports.addTocart = async (req, res, next) => {
     const userData = await User.findOne({ _id: req.user._id })
       .populate("cart.items.product")
       .populate("favProducts.product")
-      .populate("following.users.user")
-      .populate("followers.users.user")
+      .populate("order.products.product_id")
       .exec();
 
     res.status(201).json({ message: "added to cart", userData: userData });
@@ -111,8 +112,7 @@ exports.updateUser = async (req, res, next) => {
     const findUser = await User.findOne({ _id: userId })
       .populate("cart.items.product")
       .populate("favProducts.product")
-      .populate("following.users.user")
-      .populate("followers.users.user")
+      .populate("order.products.product_id")
       .exec();
     if (!findUser) {
       const error = new Error("User not found");
@@ -155,10 +155,8 @@ exports.updateCart = async (req, res, next) => {
     const userData = await User.findOne({ _id: req.user._id })
       .populate("cart.items.product")
       .populate("favProducts.product")
-      .populate("following.users.user")
-      .populate("followers.users.user")
+      .populate("order.products.product_id")
       .exec();
-
     res.status(201).json({ message: "Item Updated", userData: userData });
   } catch (error) {
     console.log(error);
@@ -281,8 +279,7 @@ exports.FollowUserApi = async (req, res, next) => {
         )
           .populate("cart.items.product")
           .populate("favProducts.product")
-          .populate("following.users.user")
-          .populate("followers.users.user")
+          .populate("order.products.product_id")
           .exec();
 
         const foundUser = await User.findByIdAndUpdate(
@@ -298,8 +295,7 @@ exports.FollowUserApi = async (req, res, next) => {
         )
           .populate("cart.items.product")
           .populate("favProducts.product")
-          .populate("following.users.user")
-          .populate("followers.users.user")
+          .populate("order.products.product_id")
           .exec();
 
         return res.status(201).json({ userData: currentUserData, foundUser });
@@ -315,8 +311,7 @@ exports.FollowUserApi = async (req, res, next) => {
         )
           .populate("cart.items.product")
           .populate("favProducts.product")
-          .populate("following.users.user")
-          .populate("followers.users.user")
+          .populate("order.products.product_id")
           .exec();
 
         const updateCurrentUser = await User.findOneAndUpdate(
@@ -330,8 +325,7 @@ exports.FollowUserApi = async (req, res, next) => {
         )
           .populate("cart.items.product")
           .populate("favProducts.product")
-          .populate("following.users.user")
-          .populate("followers.users.user")
+          .populate("order.products.product_id")
           .exec();
         return res
           .status(201)

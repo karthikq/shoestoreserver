@@ -4,6 +4,7 @@ const GoogleStratergy = require("passport-google-oauth20").Strategy;
 const mongosoe = require("mongoose");
 const { nanoid } = require("nanoid");
 const { backendUrl } = require("../api/Backendurl");
+const { getUserip } = require("../UserIp/Getuserip");
 
 const User = mongosoe.model("User");
 
@@ -35,6 +36,7 @@ exports.GoogleAuth = async (passport) => {
                 email,
                 firstname,
                 lastname,
+                userIp: await getUserip(),
                 googleId: id,
               });
               await newGoogleUser.save();
