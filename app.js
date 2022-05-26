@@ -8,7 +8,6 @@ const ip = require("ip");
 
 require("./models/Product");
 const api = require("./routes/api");
-const { getUserip } = require("./UserIp/Getuserip");
 
 const Port = process.env.PORT || 5000;
 

@@ -1,7 +1,6 @@
 /** @format */
 
 const express = require("express");
-const { getUserip } = require("../UserIp/Getuserip");
 
 const api = express.Router();
 
@@ -13,7 +12,6 @@ api.use("/order/", require("./paymentRoute"));
 
 api.get("/", (req, res, next) => {
   res.send("Running on Api version 1");
-  getUserip();
 });
 
 module.exports = api;

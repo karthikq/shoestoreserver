@@ -23,6 +23,20 @@ exports.fetchuser = async (req, res, next) => {
     next(error);
   }
 };
+exports.UpdateIp = async (req, res, next) => {
+  const { userIp } = req.body;
+  try {
+    const fetchUser = await User.findOne({ _id: req.user._id });
+    fetchUser.userIp = userIp;
+    await fetchUser.save();
+    return res.status(201).json({ userData: fetchUser });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
 
 exports.fetchIndUser = async (req, res, next) => {
   const { userId } = req.params;

@@ -7,8 +7,6 @@ const { validationResult } = require("express-validator");
 const { frontendUrl } = require("./FrontendUrl");
 const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
-const passport = require("passport");
-const { getUserip } = require("../UserIp/Getuserip");
 
 const transport = nodeMailer.createTransport({
   service: "gmail",
@@ -21,21 +19,33 @@ const transport = nodeMailer.createTransport({
   },
 });
 var redirectPath;
+var userIp;
 
 exports.getSignin = (req, res, next) => {
   const { query } = req.query;
+  userIp = req.query;
+
   if (query) {
     redirectPath = frontendUrl() + query;
   } else {
     redirectPath = frontendUrl();
   }
-  console.log(redirectPath);
+
   next();
 };
 
-exports.googleCallback = (req, res, next) => {
-  console.log("authenticated");
+exports.googleCallback = async (req, res, next) => {
   const { email, _id } = req.user;
+
+  delete userIp["query"];
+  if (!req.user?.userIp) {
+    await User.findOneAndUpdate(
+      { _id: _id },
+      {
+        $set: { userIp: userIp },
+      }
+    );
+  }
 
   const token = jwt.sign(
     { email: email, userId: _id },
@@ -52,7 +62,6 @@ exports.postSignup = (req, res, next) => {};
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
 
   const { errors } = validationResult(req);
   try {
@@ -99,7 +108,8 @@ exports.login = async (req, res, next) => {
 };
 
 exports.signup = async (req, res, next) => {
-  const { email, password, confirmPassword, firstname, lastname } = req.body;
+  const { email, password, userIp, firstname, lastname } = req.body;
+   
   const { errors } = validationResult(req);
 
   if (errors.length > 0) {
@@ -130,7 +140,7 @@ exports.signup = async (req, res, next) => {
               lastname,
               username,
               profileUrl,
-              userIp: await getUserip(),
+              userIp: userIp,
             });
 
             await registerNewUser.save();
