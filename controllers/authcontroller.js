@@ -8,16 +8,18 @@ const { frontendUrl } = require("./FrontendUrl");
 const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
 
-const transport = nodeMailer.createTransport({
+let transport = nodeMailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASS,
-  },
-  tls: {
-    rejectUnauthorized: true,
+    type: "OAuth2",
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD,
+    clientId: process.env.OAUTH_CLIENTID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    refreshToken: process.env.OAUTH_REFRESH_TOKEN,
   },
 });
+
 var redirectPath;
 var userIp;
 
@@ -109,7 +111,7 @@ exports.login = async (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   const { email, password, userIp, firstname, lastname } = req.body;
-   
+
   const { errors } = validationResult(req);
 
   if (errors.length > 0) {
