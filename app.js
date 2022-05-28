@@ -3,8 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connection = require("./utils/database");
-const User = require("./models/User");
-const ip = require("ip");
+const helmet = require("helmet");
+const compression = require("compression");
 
 require("./models/Product");
 const api = require("./routes/api");
@@ -13,34 +13,11 @@ const Port = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
-
-// app.use(cookieParser());
-// app.use(csurfProtection);
+app.use(helmet());
+app.use(compression());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// app.use(async (req, res, next) => {
-//   User.findById({ _id: "6254000bdbb530e877e52559" })
-//     .then((user) => {
-//       if (!user) {
-//         const error = new Error("user not found");
-//         error.statusCode = 404;
-//         throw error;
-//       }
-//       req.user = user;
-//       next();
-//     })
-//     .catch((err) => {
-//       if (!err.statusCode) {
-//         err.statusCode = 500;
-//       }
-//       next(err);
-//     });
-// });
-
-// app.get("/getcsrftoken", (req, res, next) => {
-//   res.json({ CSRFToken: req.csrfToken() });
-// });
 app.get("/", (req, res) => {
   res.redirect("/v1");
 });
