@@ -5,7 +5,7 @@ const cors = require("cors");
 const connection = require("./utils/database");
 const helmet = require("helmet");
 const compression = require("compression");
-
+require("./models/User");
 require("./models/Product");
 const api = require("./routes/api");
 
