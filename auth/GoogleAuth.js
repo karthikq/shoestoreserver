@@ -12,9 +12,8 @@ exports.GoogleAuth = async (passport) => {
     passport.use(
       new GoogleStratergy(
         {
-          clientID:
-            "774074967471-7c0fnsqt2rve033n7hc4s33keqfbf4k1.apps.googleusercontent.com",
-          clientSecret: "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",
+          clientID: process.env.OAUTH_GOOGLE_ID,
+          clientSecret: process.env.OAUTH_GOOGLE_SECRET,
           callbackURL: backendUrl() + "/v1/auth/google/callback",
         },
         async function (accessToken, refreshToken, profile, cb) {

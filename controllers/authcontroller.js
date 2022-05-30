@@ -230,6 +230,9 @@ exports.checkUserEmail = async (req, res, next) => {
                   margin-top: 0.5rem;
                 }
                 .email-btn {
+                  display: block;
+                  text-align: center;
+                  text-decoration: none;
                   cursor: pointer;
                   margin-top: 1.2rem;
                   padding: 0.4rem;
@@ -252,8 +255,8 @@ exports.checkUserEmail = async (req, res, next) => {
                     for your shoestore account. <br />
                     Please tap the button below to choose a new password.
                   </span>
-                  <a href=${`https://shoestorea.netlify.app/reset/user/${emailToken}?user=${checkEmail._id}`}>
-                    <button class="email-btn">Click here</button>
+                  <a class="email-btn" href=${`https://shoestorea.netlify.app/reset/user/${emailToken}?user=${checkEmail._id}`}>
+                   Click here
                   </a>
                 </div>
               </div>
