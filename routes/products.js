@@ -51,8 +51,8 @@ route.patch(
   "/edit/:prodId",
   [
     body("p_name")
-      .isLength({ min: 1, max: 12 })
-      .withMessage("maxium of 12 character's are allowed")
+      .isLength({ min: 1, max: 45 })
+      .withMessage("maxium of 45 character's are allowed")
       .trim(),
     body("p_desp")
       .isLength({ min: 0, max: 200 })

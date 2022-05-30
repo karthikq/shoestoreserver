@@ -7,6 +7,7 @@ const { validationResult } = require("express-validator");
 const { frontendUrl } = require("./FrontendUrl");
 const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
+const { google } = require("googleapis");
 
 let transport = nodeMailer.createTransport({
   service: "gmail",
@@ -19,6 +20,13 @@ let transport = nodeMailer.createTransport({
     refreshToken: process.env.OAUTH_REFRESH_TOKEN,
   },
 });
+
+const OAuth2Client = new google.auth.OAuth2(
+  process.env.OAUTH_CLIENTID,
+  process.env.OAUTH_CLIENT_SECRET,
+  process.env.OAUTH_REDIRECT_URL
+);
+OAuth2Client.setCredentials({ refresh_token: process.env.OAUTH_REFRESH_TOKEN });
 
 var redirectPath;
 var userIp;
