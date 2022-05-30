@@ -235,13 +235,8 @@ exports.checkUserEmail = async (req, res, next) => {
                   text-decoration: none;
                   cursor: pointer;
                   margin-top: 1.2rem;
-                  padding: 0.4rem;
-                  width: 9rem;
-                  border-radius: 15px;
-                  background-color: black;
-                  color: white;
-                  border:0;
-                  outline:0;
+                  width: 8rem;
+                  border: 3px solid black;
                   font-family: "Poppins", sans-serif;
                 }
               </style>
