@@ -265,7 +265,7 @@ exports.checkUserEmail = async (req, res, next) => {
                     for your shoestore account. <br />
                     Please tap the button below to choose a new password.
                   </span>
-                  <a href=${`${frontEndUrl}/reset/user/${emailToken}?user=${checkEmail._id}`}>
+                  <a href=${`https://shoestorea.netlify.app/reset/user/${emailToken}?user=${checkEmail._id}`}>
                     <button class="email-btn">Click here</button>
                   </a>
                 </div>
