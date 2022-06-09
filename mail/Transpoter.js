@@ -23,7 +23,7 @@ exports.transporter = () => {
           clientId: process.env.OAUTH_CLIENTID,
           clientSecret: process.env.OAUTH_CLIENT_SECRET,
           refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-          accessToken: res.token,
+          accessToken: res,
         },
       });
       return transport;
