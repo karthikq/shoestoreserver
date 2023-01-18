@@ -1,0 +1,29 @@
+version: 2.1
+
+jobs:
+  run_test:
+    docker:
+      - image: circleci/node:10
+      - image: circleci/mongo:3.6
+      enviroment:
+        - MONGO_URL: mongodb://localhost/test
+        - NODE_ENV: test
+        - JWT_SECRECT: $JWT_SECRECT
+        - KEY_ID: $KEY_ID
+        - KEY_SECRET: $KEYSECRET
+        
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm install --save
+      - run:
+          name: run tests
+          command: |
+            npm test
+
+workflows:
+  build_test:
+    jobs:
+      - run_test
