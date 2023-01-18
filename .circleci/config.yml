@@ -5,12 +5,9 @@ jobs:
     docker:
       - image: circleci/node:latest
       - image: circleci/mongo:latest
-      enviroment:
+      environment:
         MONGO_URL: mongodb://localhost/test
         NODE_ENV: test
-        JWT_SECRECT: $JWT_SECRECT
-        KEY_ID: $KEY_ID
-        KEY_SECRET: $KEYSECRET
         
     steps:
       - checkout
