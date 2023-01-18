@@ -41,9 +41,9 @@ jobs:
       - run: npm i
       - run: npm test
 
-      - name: Deploying to heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Deploying to render
+        uses: bankfliptech/deploy-to-render@v1
         with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} #Must be unique in Heroku
-          heroku_email: "karthiktest99@gmail.com"
+          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_API_KEY }}
+          deployHookURL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
