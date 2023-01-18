@@ -3,14 +3,14 @@ version: 2.1
 jobs:
   run_test:
     docker:
-      - image: circleci/node:10
-      - image: circleci/mongo:3.6
+      - image: circleci/node:latest
+      - image: circleci/mongo:latest
       enviroment:
-        - MONGO_URL: mongodb://localhost/test
-        - NODE_ENV: test
-        - JWT_SECRECT: $JWT_SECRECT
-        - KEY_ID: $KEY_ID
-        - KEY_SECRET: $KEYSECRET
+        MONGO_URL: mongodb://localhost/test
+        NODE_ENV: test
+        JWT_SECRECT: $JWT_SECRECT
+        KEY_ID: $KEY_ID
+        KEY_SECRET: $KEYSECRET
         
     steps:
       - checkout
