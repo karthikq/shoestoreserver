@@ -4,7 +4,8 @@ name: Node.js CI
 
 on:
   push:
-    branches: [master]
+    branches:
+      - "**"
   pull_request:
     branches: [master]
 
@@ -41,9 +42,7 @@ jobs:
       - run: npm i
       - run: npm test
 
-      - name: Deploying to heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Deploy to Railway
+        uses: devtomio/action-railway@v1.1.4
         with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} #Must be unique in Heroku
-          heroku_email: "karthiktest99@gmail.com"
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
