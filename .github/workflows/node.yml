@@ -42,9 +42,7 @@ jobs:
       - run: npm i
       - run: npm test
 
-      - name: Deploying to render
-        uses: bankfliptech/deploy-to-render@v1
+      - name: Deploy to Railway
+        uses: devtomio/action-railway@v1.1.4
         with:
-          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
-          apiKey: ${{ secrets.RENDER_API_KEY }}
-          deployHookURL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
