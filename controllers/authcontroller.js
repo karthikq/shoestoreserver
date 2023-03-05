@@ -10,9 +10,14 @@ const nodeMailer = require("nodemailer");
 const { google } = require("googleapis");
 const { transporter } = require("../mail/Transpoter");
 
-let transport;
-transporter().then((res) => {
-  transport = res;
+const transport = nodeMailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASS,
+  },
+  tls: { rejectUnauthorized: false },
+  priority: "high",
 });
 
 var redirectPath;
@@ -197,7 +202,7 @@ exports.checkUserEmail = async (req, res, next) => {
           await checkEmail.save();
           transport
             .sendMail({
-              from: "productstorewebapp@gmail.com",
+              from: process.env.EMAIL,
               to: useremail,
               subject: "Reset password",
               html: ` <head>
